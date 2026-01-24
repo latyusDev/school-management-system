@@ -8,9 +8,20 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-lamaSky:#C3EBFA;
+  --color-lamaSkyLight:#EDF9FD;
+  --color-lamaPurple:#CFCEFF;
+  --color-lamaPurpleLight:#F1F0FF;
+  --color-lamaYellow:#FAE27C;
+  --color-lamaYellowLight:#FEFCE8;
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
+
+@utility bg-conic {
+  background-image: conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops));
+}
+
 
 @media (prefers-color-scheme: dark) {
   :root {
