@@ -38,8 +38,8 @@ const events:Event[] = [
 const Announcement = () => {
   return (
         <div className='bg-white p-4 rounded-md'>
-            <div className='flex items-center justify-between'>
-                <h1 className='font-semibold mb-5'>Announcements</h1>
+            <div className='flex items-center justify-between mb-5'>
+                <h1 className='font-semibold '>Announcements</h1>
                 <span className='text-xs text-gray-400'>View All</span>
             </div>
             <div className='bg-lamaSkyLight rounded-md p-4'></div>

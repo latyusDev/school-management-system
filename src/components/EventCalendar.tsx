@@ -70,8 +70,6 @@ const  EventCalendar = ()=> {
         }
 
       </div>
-
-      <Announcement />
     </div>
   );
 }
