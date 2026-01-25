@@ -3,7 +3,7 @@ import React from 'react'
 
 const Navbar = () => {
   return (
-    <div className='flex justify-between p-4 items-center '>
+    <div className='flex justify-between p-4 items-center bg-white'>
     {/* SEARCH BAR */}
     <div className='hidden md:flex items-center gap-2 text-xs rounded-full ring-[1.5px] ring-gray-300 px-2'>
       <Image src='/search.png' alt='search' height={14} width={14}/>
