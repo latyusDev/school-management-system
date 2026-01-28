@@ -30,7 +30,115 @@
 }
 
 .react-calendar__navigation__label__labelText{
-  font-weight: 600;
+  font-weight: 600 !important;
+}
+
+.rbc-btn-group:first-child{
+  display: none !important;
+}
+
+.rbc-btn-group:last-child{
+  font-size: 13px !important;
+}
+
+.rbc-toolbar-label{
+  text-align: right !important;
+  padding: 0px 20px !important;
+}
+
+.rbc-toolbar button.rbc-active{
+ background-color: #dbdafe !important;
+ box-shadow: none !important;
+}
+ .rbc-btn-group .rbc-active{
+ background-color: red !important;
+
+}
+.rbc-time-view{
+  border-color: #eee !important;
+}
+
+.rbc-time-header{
+  display: none !important;
+}
+
+.rbc-time-content{
+  border: none !important;
+}
+
+.rbc-time-gutter .rbc-time-column{
+  font-size: 12px !important;
+  border: none !important;
+}
+.rbc-time-gutter.rbc-time-column .rbc-timeslot-group{
+  padding: 20px !important;
+  border: none !important;
+  
+}
+.rbc-timeslot-group{
+  background-color: #f2fdff !important;
+}
+
+.rbc-day-slot{
+  font-size: 14px !important;
+}
+.rbc-event{
+   color: black  !important;
+   border: none !important;
+   padding: 10px !important;
+   /* margin: 10px !important; */
+   width: 100% !important;
+}
+
+
+.rbc-event-label{
+  color: gray !important;
+
+}
+
+.rbc-event:nth-child(1){
+   background-color: #e2f8ff  !important;
+}
+
+.rbc-event:nth-child(2){
+   background-color: #fefce8  !important;
+}
+
+.rbc-event:nth-child(3){
+   background-color: #f2f1ff  !important;
+}
+
+.rbc-event:nth-child(4){
+   background-color: #fdf2fb  !important;
+}
+
+.rbc-event:nth-child(5){
+   background-color: #e2f8ff  !important;
+}
+
+.rbc-event:nth-child(6){
+   background-color: #fefce8  !important;
+}
+
+.rbc-event:nth-child(7){
+   background-color: #f2f1ff  !important;
+}
+
+.rbc-event:nth-child(8){
+   background-color: #fdf2fb  !important;
+}
+
+.rbc-toolbar-label{
+  text-align: right !important;
+  padding: 0px 20px !important;
+}
+
+
+.rbc-btn-group:last-child button{
+  border: none !important;
+  margin-left: 2px !important;
+  background-color: #f1f0ff !important;
+
 }
 
 @utility bg-conic {
