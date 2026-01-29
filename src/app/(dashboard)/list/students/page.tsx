@@ -4,19 +4,19 @@ import TableSearch from '@/components/TableSearch'
 import Image from 'next/image'
 import type { Column } from '@/components/Table'
 import Link from 'next/link'
-import { role, teacherData } from '@/lib/data'
+import { role, studentsData, teacherData } from '@/lib/data'
 import { FcViewDetails } from 'react-icons/fc'
 import { FiDelete } from 'react-icons/fi'
 
-interface Teacher{
+interface Student{
     id: number;
-    teacherId: string;
+    studentId: string;
     name: string;
-    email: string
+    email?: string
     photo: string
-    phone: string
-    subjects: string[],
-    classes: string[],
+    phone?: string
+    grade: number,
+    class: string,
     address: string
   }
 
@@ -26,18 +26,18 @@ const columns:Column[] = [
         accessor:'info'
     },
     {
-        header:'Teacher ID',
-        accessor:'teacherId',
+        header:'Student ID',
+        accessor:'studentId',
         className:'hidden md:table-cell'
     },
     {
-        header:'Subjects',
-        accessor:'subjects',
+        header:'Grade',
+        accessor:'grades',
         className:'hidden md:table-cell'
     },
     {
-        header:'Classes',
-        accessor:'classes',
+        header:'Class',
+        accessor:'class',
         className:'hidden md:table-cell'
     },
     {
@@ -58,9 +58,8 @@ const columns:Column[] = [
 ]
 
 
-const TeacherListPage = () => {
-    console.log(teacherData)
-    const renderRow = (item:Teacher)=>{
+const StudentListPage = () => {
+    const renderRow = (item:Student)=>{
        return  <tr key={item.id} className=' border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-lamaPurpleLight'>
             <td className='flex items-center gap-4 p-4'>
                 <Image src={item.photo} alt='photo' width={40} height={40}
@@ -70,9 +69,9 @@ const TeacherListPage = () => {
                 <p className='text-xs text-gray-500'>{item?.email}</p>
              </div>
              </td>
-             <td className='hidden md:table-cell'>{item.teacherId}</td>
-             <td className='hidden md:table-cell'>{item.subjects.join(',')}</td>
-             <td className='hidden md:table-cell'>{item.classes.join(',')}</td>
+             <td className='hidden md:table-cell'>{item.studentId}</td>
+             <td className='hidden md:table-cell'>{item.grade}</td>
+             <td className='hidden md:table-cell'>{item.class}</td>
              <td className='hidden md:table-cell'>{item.phone}</td>
              <td className='hidden md:table-cell'>{item.address}</td>
              <td>
@@ -115,7 +114,7 @@ const TeacherListPage = () => {
         </div>
         {/* list */}
         <div className="">
-            <Table  columns={columns} row={renderRow} data={teacherData} />
+            <Table  columns={columns} row={renderRow} data={studentsData} />
         </div>
         {/* pagination */}
         <div className="">
@@ -125,4 +124,4 @@ const TeacherListPage = () => {
   )
 }
 
-export default TeacherListPage
+export default StudentListPage
