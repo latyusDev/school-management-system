@@ -1399,3 +1399,175 @@ export const resultsData: Result[] = [
     score: 97
   }
 ];
+
+interface Event {
+  id: number;
+  title: string;
+  class: string;
+  startTime: string;
+  endTime: string;
+  date: string;
+}
+
+export const eventsData: Event[] = [
+  {
+    id: 1,
+    title: "Science Fair",
+    class: "Grade 10A",
+    startTime: "09:00",
+    endTime: "12:00",
+    date: "2025-02-10"
+  },
+  {
+    id: 2,
+    title: "Math Competition",
+    class: "Grade 11B",
+    startTime: "10:00",
+    endTime: "13:00",
+    date: "2025-02-11"
+  },
+  {
+    id: 3,
+    title: "Parent-Teacher Meeting",
+    class: "Grade 12A",
+    startTime: "14:00",
+    endTime: "17:00",
+    date: "2025-02-12"
+  },
+  {
+    id: 4,
+    title: "Sports Day",
+    class: "Grade 9A",
+    startTime: "08:00",
+    endTime: "15:00",
+    date: "2025-02-13"
+  },
+  {
+    id: 5,
+    title: "Drama Performance",
+    class: "Grade 10B",
+    startTime: "18:00",
+    endTime: "20:00",
+    date: "2025-02-14"
+  },
+  {
+    id: 6,
+    title: "Art Exhibition",
+    class: "Grade 11A",
+    startTime: "11:00",
+    endTime: "16:00",
+    date: "2025-02-15"
+  },
+  {
+    id: 7,
+    title: "Music Concert",
+    class: "Grade 12B",
+    startTime: "19:00",
+    endTime: "21:00",
+    date: "2025-02-16"
+  },
+  {
+    id: 8,
+    title: "Career Guidance Workshop",
+    class: "Grade 11B",
+    startTime: "13:00",
+    endTime: "15:00",
+    date: "2025-02-17"
+  },
+  {
+    id: 9,
+    title: "Debate Competition",
+    class: "Grade 10A",
+    startTime: "10:00",
+    endTime: "14:00",
+    date: "2025-02-18"
+  },
+  {
+    id: 10,
+    title: "School Trip",
+    class: "Grade 9B",
+    startTime: "07:00",
+    endTime: "18:00",
+    date: "2025-02-19"
+  },
+  {
+    id: 11,
+    title: "Cultural Festival",
+    class: "Grade 12A",
+    startTime: "09:00",
+    endTime: "17:00",
+    date: "2025-02-20"
+  },
+  {
+    id: 12,
+    title: "Book Fair",
+    class: "Grade 10B",
+    startTime: "12:00",
+    endTime: "16:00",
+    date: "2025-02-21"
+  },
+  {
+    id: 13,
+    title: "Chess Tournament",
+    class: "Grade 11A",
+    startTime: "09:00",
+    endTime: "13:00",
+    date: "2025-02-22"
+  },
+  {
+    id: 14,
+    title: "Coding Workshop",
+    class: "Grade 12B",
+    startTime: "14:00",
+    endTime: "17:00",
+    date: "2025-02-23"
+  },
+  {
+    id: 15,
+    title: "Charity Fundraiser",
+    class: "Grade 9A",
+    startTime: "10:00",
+    endTime: "15:00",
+    date: "2025-02-24"
+  },
+  {
+    id: 16,
+    title: "Photography Exhibition",
+    class: "Grade 11B",
+    startTime: "11:00",
+    endTime: "14:00",
+    date: "2025-02-25"
+  },
+  {
+    id: 17,
+    title: "Environmental Awareness Day",
+    class: "Grade 10A",
+    startTime: "08:00",
+    endTime: "12:00",
+    date: "2025-02-26"
+  },
+  {
+    id: 18,
+    title: "Graduation Ceremony",
+    class: "Grade 12A",
+    startTime: "16:00",
+    endTime: "19:00",
+    date: "2025-02-27"
+  },
+  {
+    id: 19,
+    title: "Science Quiz Competition",
+    class: "Grade 9B",
+    startTime: "10:00",
+    endTime: "12:00",
+    date: "2025-02-28"
+  },
+  {
+    id: 20,
+    title: "Annual Day Celebration",
+    class: "Grade 11A",
+    startTime: "17:00",
+    endTime: "21:00",
+    date: "2025-03-01"
+  }
+];
