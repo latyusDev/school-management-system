@@ -1035,13 +1035,6 @@ export const examsData = [
   }
 ];
 
-interface Assignment {
-  id: number;
-  subject: string;
-  class: string;
-  teacher: string;
-  date: string;
-}
 
 export const assignmentsData = [
   {
@@ -1186,18 +1179,7 @@ export const assignmentsData = [
   }
 ];
 
-interface Result {
-  id: number;
-  subject: string;
-  class: string;
-  teacher: string;
-  student: string;
-  type: 'exam' | 'assignments';
-  date: string;
-  score: number;
-}
-
-export const resultsData: Result[] = [
+export const resultsData = [
   {
     id: 1,
     subject: "Mathematics",
@@ -1400,16 +1382,8 @@ export const resultsData: Result[] = [
   }
 ];
 
-interface Event {
-  id: number;
-  title: string;
-  class: string;
-  startTime: string;
-  endTime: string;
-  date: string;
-}
 
-export const eventsData: Event[] = [
+export const eventsData = [
   {
     id: 1,
     title: "Science Fair",
@@ -1569,5 +1543,192 @@ export const eventsData: Event[] = [
     startTime: "17:00",
     endTime: "21:00",
     date: "2025-03-01"
+  }
+];
+
+
+export const subjectsDat = [
+  {
+    id: 1,
+    title: "Mathematics",
+    class: "Grade 10A",
+    date: "2025-02-10"
+  },
+  {
+    id: 2,
+    title: "English Literature",
+    class: "Grade 11B",
+    date: "2025-02-11"
+  },
+  {
+    id: 3,
+    title: "Physics",
+    class: "Grade 12A",
+    date: "2025-02-12"
+  },
+  {
+    id: 4,
+    title: "Chemistry",
+    class: "Grade 11A",
+    date: "2025-02-13"
+  },
+  {
+    id: 5,
+    title: "Biology",
+    class: "Grade 10B",
+    date: "2025-02-14"
+  },
+  {
+    id: 6,
+    title: "History",
+    class: "Grade 9A",
+    date: "2025-02-15"
+  },
+  {
+    id: 7,
+    title: "Geography",
+    class: "Grade 9B",
+    date: "2025-02-16"
+  },
+  {
+    id: 8,
+    title: "Computer Science",
+    class: "Grade 12B",
+    date: "2025-02-17"
+  },
+  {
+    id: 9,
+    title: "Spanish",
+    class: "Grade 10A",
+    date: "2025-02-18"
+  },
+  {
+    id: 10,
+    title: "French",
+    class: "Grade 11B",
+    date: "2025-02-19"
+  },
+  {
+    id: 11,
+    title: "Economics",
+    class: "Grade 12A",
+    date: "2025-02-20"
+  },
+  {
+    id: 12,
+    title: "Art & Design",
+    class: "Grade 9A",
+    date: "2025-02-21"
+  },
+  {
+    id: 13,
+    title: "Physical Education",
+    class: "Grade 10B",
+    date: "2025-02-22"
+  },
+  {
+    id: 14,
+    title: "Music Theory",
+    class: "Grade 11A",
+    date: "2025-02-23"
+  },
+  {
+    id: 15,
+    title: "Psychology",
+    class: "Grade 12B",
+    date: "2025-02-24"
+  },
+  {
+    id: 16,
+    title: "Sociology",
+    class: "Grade 11B",
+    date: "2025-02-25"
+  },
+  {
+    id: 17,
+    title: "Business Studies",
+    class: "Grade 12A",
+    date: "2025-02-26"
+  },
+  {
+    id: 18,
+    title: "Environmental Science",
+    class: "Grade 10A",
+    date: "2025-02-27"
+  },
+  {
+    id: 19,
+    title: "Philosophy",
+    class: "Grade 12B",
+    date: "2025-02-28"
+  },
+  {
+    id: 20,
+    title: "Statistics",
+    class: "Grade 11A",
+    date: "2025-03-01"
+  }
+];
+
+export const announcementsData = [
+  {
+    id: 1,
+    title: "Welcome Back to School",
+    class: "All Classes",
+    date: "2025-01-08"
+  },
+  {
+    id: 2,
+    title: "First Term Examination Begins",
+    class: "Grade 6A",
+    date: "2025-02-03"
+  },
+  {
+    id: 3,
+    title: "Parent-Teacher Meeting",
+    class: "Grade 5A",
+    date: "2025-02-10"
+  },
+  {
+    id: 4,
+    title: "Inter-House Sports Competition",
+    class: "All Classes",
+    date: "2025-02-18"
+  },
+  {
+    id: 5,
+    title: "Mid-Term Break",
+    class: "All Classes",
+    date: "2025-02-24"
+  },
+  {
+    id: 6,
+    title: "Science Fair Exhibition",
+    class: "Grade 4A",
+    date: "2025-03-05"
+  },
+  {
+    id: 7,
+    title: "Civic Education Test",
+    class: "Grade 2A",
+    date: "2025-03-12"
+  },
+  {
+    id: 8,
+    title: "Cultural Day Celebration",
+    class: "Grade 3B",
+    date: "2025-03-20"
+  },
+  {
+    id: 9,
+    title: "Mathematics Quiz Competition",
+    class: "Grade 6B",
+    date: "2025-03-25"
+  },
+  {
+    id: 10,
+    title: "End of Term Closing Ceremony",
+    class: "All Classes",
+    date: "2025-04-05"
   }
 ];

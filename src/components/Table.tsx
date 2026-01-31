@@ -16,7 +16,7 @@ const Table = <T,>({columns,row,data}:TableProps<T>) => {
   return (
     <table className='w-full mt-4 text-left text-gray-500 text-sm'>
         <thead>
-            <tr>
+            <tr className='mb-10'>
                 {columns.map(col=>(
                     <th className={col.className} key={col.accessor}>
                         {col.header}
