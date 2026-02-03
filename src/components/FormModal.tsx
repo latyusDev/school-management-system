@@ -40,7 +40,8 @@ const FormModal = ({table,type,data,id}:FormData) => {
                 className={`${size} flex items-center justify-center rounded-full ${bgColor}`}
             >
                 {type === 'delete' && <BiTrash className='cursor-pointer size-16'/>}
-                {type === 'create' && <Link href={'/list/teachers/register'} ><PiPlusBold className='cursor-pointer size-16'/></Link>}
+                {type === 'create' && <Link href={'/list/teachers/register'} >
+                <PiPlusBold className='cursor-pointer size-16'/></Link>}
                 {type === 'update' && <IoCreate className='cursor-pointer size-16'/>}
             </button>
 

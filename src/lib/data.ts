@@ -337,15 +337,15 @@ export const teacherData = [
 
 export const studentsData = [
   {
-    id: 1,
-    studentId: '1233544566',
-    name: 'Yunus Fatai',
-    email: 'yunus@gmail.com',
-    photo: 'https://randomuser.me/api/portraits/men/1.jpg',
-    phone: '123455678909',
-    grade: 5,
-    class: '1B',
-    address: '123 Main St, Antony town, USA'
+    // id: 1,
+    // studentId: '1233544566',
+    // name: 'Yunus Fatai',
+    // email: 'yunus@gmail.com',
+    // photo: 'https://randomuser.me/api/portraits/men/1.jpg',
+    // phone: '123455678909',
+    // grade: 5,
+    // class: '1B',
+    // address: '123 Main St, Antony town, USA'
   },
   {
     id: 2,

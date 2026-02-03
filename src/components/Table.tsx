@@ -1,18 +1,18 @@
 import React from 'react'
 
-export interface Column{
-    header:string;
-    accessor:string;
-    className?:string;
-}
-interface TableProps<T>{
-    column:Column[],
-    data:T[],
-    row:(item:T)=>React.ReactNode
-}
+// export interface Column{
+//     header:string;
+//     accessor:string;
+//     className?:string;
+// }
+// interface TableProps<T>{
+//     column:Column[],
+//     data:T[],
+//     row:(item:T)=>React.ReactNode
+// }
 
-const Table = <T,>({columns,row,data}:TableProps<T>) => {
-    console.log(data)
+// const Table = <T,>({columns,row,data}:TableProps<T>) => {
+const Table = ({columns,row,data}) => {
   return (
     <table className='w-full mt-4 text-left text-gray-500 text-sm'>
         <thead>
