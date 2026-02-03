@@ -84,6 +84,7 @@ model Subject{
   teacherId   String
   name String @unique
   lesson Lesson[]
+  // teachers Teacher[]
   teacher     Teacher   @relation(fields: [teacherId], references: [id], onDelete: Cascade)
   
   createdAt  DateTime @default(now())
