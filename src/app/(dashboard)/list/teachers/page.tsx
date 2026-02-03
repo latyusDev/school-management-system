@@ -105,8 +105,7 @@ const TeacherListPage = async({searchParams}:{searchParams:Promise<{page?:string
                 <Image src={item.img||'/avatar.png'} alt='photo' width={40} height={40}
              className='md:hidden xl:block size-10 rounded-full object-cover' />
              <div className='flex flex-col'>
-                <h1 className='font-semibold'>{item.firstName}</h1>
-                <h1 className='font-semibold'>{item.lastName}</h1>
+                <h1 className='font-semibold'>{item.firstName} {item.lastName}</h1>
                 <p className='text-xs text-gray-500'>{item?.email}</p>
              </div>
              </td>

@@ -28,7 +28,7 @@ const Pagination = ({page,count}:{page:number,count:number}) => {
                         const pageIndex = index + 1;
                         console.log(page,pageIndex)
                         return(
-                            <button onClick={()=>changePage(pageIndex)} className={`px-2 rounded-sm cursor-pointer ${page == pageIndex?'bg-lamaSky':''}`}>{pageIndex}</button>
+                            <button key={index} onClick={()=>changePage(pageIndex)} className={`px-2 rounded-sm cursor-pointer ${page == pageIndex?'bg-lamaSky':''}`}>{pageIndex}</button>
                         )
                     })
                 }
