@@ -2,7 +2,6 @@ import Pagination from '@/components/Pagination'
 import Table from '@/components/Table'
 import TableSearch from '@/components/TableSearch'
 import Image from 'next/image'
-import type { Column } from '@/components/Table'
 import Link from 'next/link'
 import { role, classesData } from '@/lib/data'
 import { FiDelete } from 'react-icons/fi'
@@ -11,16 +10,14 @@ import FormModal from '@/components/FormModal'
 import { IoCreate } from 'react-icons/io5'
 import { Eye, Trash2 } from 'lucide-react'
 import { PiPlusBold } from 'react-icons/pi'
+import prisma from '@/lib/db'
+import { ITEM_PER_PAGE } from '@/lib/settings'
+import { Class, Prisma, Teacher } from '@/generated/prisma/client'
 
-interface Class{
-    id: number;
-    name: string;
-    capacity: number;
-    grade: number;
-    supervisor:string
-  }
 
-const columns:Column[] = [
+type ClassList = Class&{supervisor:Teacher}
+
+const columns = [
     {
         header:'Class Name',
         accessor:'name'
@@ -48,40 +45,79 @@ const columns:Column[] = [
     }
 ]
 
+const renderRow = (item:ClassList)=>{
+           return  <tr key={item.id} className=' shadow-md  rounded-md '>
+        <td className='flex items-center gap-4 p-4'>
+         <div className='flex flex-col'>
+            <h1 className='font-semibold'>{item.name}</h1>
+         </div>
+         </td>
+         <td className='hidden md:table-cell'>{item.capacity}</td>
+         <td className='hidden md:table-cell'>{item.name[0]}</td>
+         <td className='hidden md:table-cell'>{item.supervisor.lastName+' '+ item.supervisor.lastName}</td>
+         <td>
+               <div className='flex items-center gap-2'>
+                {
+                    role === 'admin'&&
+                    <>
+                        <Link href={`/list/classes/${item.id}`} className='text-blue-500'>
+                            <Eye className='cursor-pointer size-7 md:size-8'/>
+                        </Link>
+                        <Link href={`/list/classes/${item.id}/edit`} className='text-green-500' >
+                            <IoCreate className='cursor-pointer size-7 md:size-8'/>
+                        </Link>
+                        <button>
+                            <Trash2 className='size-7 md:size-8 text-red-500' />
+                        </button>
 
-const ClassListPage = () => {
-    const renderRow = (item:Class)=>{
-               return  <tr key={item.id} className=' shadow-md  rounded-md '>
-            <td className='flex items-center gap-4 p-4'>
-             <div className='flex flex-col'>
-                <h1 className='font-semibold'>{item.name}</h1>
-             </div>
-             </td>
-             <td className='hidden md:table-cell'>{item.grade}</td>
-             <td className='hidden md:table-cell'>{item.capacity}</td>
-             <td className='hidden md:table-cell'>{item.supervisor}</td>
-             <td>
-                   <div className='flex items-center gap-2'>
-                    {
-                        role === 'admin'&&
-                        <>
-                            <Link href={`/list/classes/${item.id}`} className='text-blue-500'>
-                                <Eye className='cursor-pointer size-7 md:size-8'/>
-                            </Link>
-                            <Link href={`/list/classes/${item.id}/edit`} className='text-green-500' >
-                                <IoCreate className='cursor-pointer size-7 md:size-8'/>
-                            </Link>
-                            <button>
-                                <Trash2 className='size-7 md:size-8 text-red-500' />
-                            </button>
+                        
+                    </>
+                }
+            </div>
+         </td>
+    </tr>
+}
 
-                            
-                        </>
-                    }
-                </div>
-             </td>
-        </tr>
+const ClassListPage = async({searchParams}:{searchParams:Promise<{page?:string,classId?:string}|undefined>}) => {
+    // Await the searchParams Promise
+    const resolvedParams = await searchParams;
+    const {page, ...queryParams} = resolvedParams || {};
+
+
+    const p = page ? (Number(page)) : 1 
+    console.log(queryParams)
+    console.log(Object.entries(queryParams),'ent')
+    // url params conditions
+    let query:Prisma.ClassWhereInput = {}
+
+    if(queryParams){
+        for(const [key,values] of Object.entries(queryParams)){
+              if(values !== undefined){
+                  switch(key){
+                    case 'supervisorId':
+                       query.supervisorId = values
+                    break;
+                    case 'search': 
+                       query.name = {contains:values,mode:'insensitive'} 
+                    break;
+                }
+              }
+        }
     }
+
+    const [data,count] = await prisma.$transaction([
+         prisma.class.findMany({
+        where:query,
+        include:{
+            supervisor:true
+        },
+        take:ITEM_PER_PAGE,
+        skip: ITEM_PER_PAGE * (p- 1)
+    }),
+     prisma.class.count({where:query})
+])
+
+
 
   return (
     <div className='bg-white p-4 rounded-md flex-1 m-4 mt-0'>
@@ -107,11 +143,11 @@ const ClassListPage = () => {
         </div>
         {/* list */}
         <div className="">
-            <Table  columns={columns} row={renderRow} data={classesData} />
+            <Table  columns={columns} row={renderRow} data={data} />
         </div>
         {/* pagination */}
         <div className="">
-            <Pagination/>
+            <Pagination page={p} count={count}/>
         </div>
     </div>
   )

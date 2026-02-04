@@ -93,6 +93,7 @@ model Subject{
 
 model Lesson{
   id Int @id @default(autoincrement())
+  // name String over sight
   startTime DateTime
   endTime DateTime
   exams Exam[]

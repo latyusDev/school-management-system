@@ -10,7 +10,6 @@ import { GoMail } from 'react-icons/go'
 import { IoGitBranchSharp } from 'react-icons/io5'
 import { MdBloodtype, MdDateRange, MdPlayLesson, MdRoomPreferences } from 'react-icons/md'
 import { TbRectangularPrism } from 'react-icons/tb'
-import { VscSymbolClass } from 'react-icons/vsc'
 
 const SingleStudentPage = () => {
   return (
@@ -96,11 +95,11 @@ const SingleStudentPage = () => {
             <div className='bg-white p-4 rounded-md'>
               <h1 className='text-xl font-semibold'>Shortcuts</h1>
               <div className='mt-4 grid grid-cols-2 gap-4  text-xs text-gray-500'>
-                  <Link className='p-3 bg-lamaSkyLight ' href={'/'}>Student's Results</Link>
+                  <Link className='p-3 bg-lamaSkyLight ' href={`/list/results?teacherId=${2}`}>Student's Results</Link>
                   <Link className='p-3 bg-lamaPurpleLight ' href={`/list/students?teacherId=${2}`} >Student's Teachers</Link>
-                  <Link className='p-3 bg-lamaYellowLight ' href={'/'}>Student's Lessons</Link>
-                  <Link className='p-3 bg-pink-50 ' href={'/'}>Student's Exams</Link>
-                  <Link className='p-3 bg-lamaSkyLight ' href={'/'}>Student's Assignment</Link>
+                  <Link className='p-3 bg-lamaYellowLight ' href={`/list/lessons?classId=${2}`}>Student's Lessons</Link>
+                  <Link className='p-3 bg-pink-50 ' href={`/list/exams?teacherId=${2}`}>Student's Exams</Link>
+                  <Link className='p-3 bg-lamaSkyLight ' href={`/list/assignments?teacherId=${2}`}>Student's Assignment</Link>
                   
               </div>
             </div>

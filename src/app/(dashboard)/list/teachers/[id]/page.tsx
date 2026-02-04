@@ -98,9 +98,9 @@ const SingleTeacherPage = () => {
               <div className='mt-4 grid grid-cols-2 gap-4  text-xs text-gray-500'>
                   <Link className='p-3 bg-lamaSkyLight ' href={`/list/classes?supervisorId=${12}`}>Teacher's Classes</Link>
                   <Link className='p-3 bg-lamaPurpleLight ' href={`/list/students?teacherId=${15}`}>Teacher's Students</Link>
-                  <Link className='p-3 bg-lamaYellowLight ' href={'/'}>Teacher's Lessons</Link>
-                  <Link className='p-3 bg-pink-50 ' href={'/'}>Teacher's Exams</Link>
-                  <Link className='p-3 bg-lamaSkyLight ' href={'/'}>Teacher's Assignment</Link>
+                  <Link className='p-3 bg-lamaYellowLight ' href={`/list/lessons?teacherId=${12}`}>Teacher's Lessons</Link>
+                  <Link className='p-3 bg-pink-50 ' href={`/list/exams?teacherId=${12}`}>Teacher's Exams</Link>
+                  <Link className='p-3 bg-lamaSkyLight ' href={`/list/assignments?teacherId=${12}`}>Teacher's Assignment</Link>
                   
               </div>
             </div>

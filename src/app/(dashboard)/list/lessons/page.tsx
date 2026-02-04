@@ -1,26 +1,20 @@
 import Pagination from '@/components/Pagination'
 import Table from '@/components/Table'
 import TableSearch from '@/components/TableSearch'
-import Image from 'next/image'
-import type { Column } from '@/components/Table'
 import Link from 'next/link'
 import {role, lessonsData } from '@/lib/data'
-import { FcViewDetails } from 'react-icons/fc'
-import { FiDelete } from 'react-icons/fi'
-import { BiEdit, BiFilter, BiSort } from 'react-icons/bi'
-import FormModal from '@/components/FormModal'
+import { BiFilter, BiSort } from 'react-icons/bi'
 import { IoCreate } from 'react-icons/io5'
 import { Eye, Trash2 } from 'lucide-react'
 import { PiPlusBold } from 'react-icons/pi'
+import { ITEM_PER_PAGE } from '@/lib/settings'
+import prisma from '@/lib/db'
+import { Class, Lesson, Prisma, Subject, Teacher } from '@/generated/prisma/client'
 
-interface Lesson{
-    id: number;
-    subject: string;
-    class: string;
-    teacher: string;
-  }
 
-const columns:Column[] = [
+type LessonList = Lesson&{subject:Subject}&{class:Class}&{teacher:Teacher}
+
+const columns = [
     {
         header:'Subject Name',
         accessor:'name'
@@ -41,40 +35,97 @@ const columns:Column[] = [
         accessor:'actions',
     }
 ]
+const renderRow = (item:LessonList)=>{
+   return  <tr key={item.id} className=' shadow-md  rounded-md '>
+        <td className='flex items-center gap-4 p-4'>
+         <div className='flex flex-col'>
+            <h1 className='font-semibold'>{item.subject.name}</h1>
+         </div>
+         </td>
+         <td className='hidden md:table-cell'>{item.class.name}</td>
+         <td className='hidden md:table-cell'>{item.teacher.firstName+' '+item.teacher.lastName}</td>
+         <td>
+              <div className='flex items-center gap-2'>
+                {
+                    role === 'admin'&&
+                    <>
+                        <Link href={`/list/lessons/${item.id}`} className='text-blue-500'>
+                            <Eye className='cursor-pointer size-7 md:size-8'/>
+                        </Link>
+                        <Link href={`/list/lessons/${item.id}/edit`} className='text-green-500' >
+                            <IoCreate className='cursor-pointer size-7 md:size-8'/>
+                        </Link>
+                        <button>
+                            <Trash2 className='size-7 md:size-8 text-red-500' />
+                        </button>
+
+                        
+                    </>
+                }
+            </div>
+         </td>
+    </tr>
+}
 
 
-const  LessonListPage = () => {
-    const renderRow = (item:Lesson)=>{
-       return  <tr key={item.id} className=' shadow-md  rounded-md '>
-            <td className='flex items-center gap-4 p-4'>
-             <div className='flex flex-col'>
-                <h1 className='font-semibold'>{item.subject}</h1>
-             </div>
-             </td>
-             <td className='hidden md:table-cell'>{item.class}</td>
-             <td className='hidden md:table-cell'>{item.teacher}</td>
-             <td>
-                  <div className='flex items-center gap-2'>
-                    {
-                        role === 'admin'&&
-                        <>
-                            <Link href={`/list/lessons/${item.id}`} className='text-blue-500'>
-                                <Eye className='cursor-pointer size-7 md:size-8'/>
-                            </Link>
-                            <Link href={`/list/lessons/${item.id}/edit`} className='text-green-500' >
-                                <IoCreate className='cursor-pointer size-7 md:size-8'/>
-                            </Link>
-                            <button>
-                                <Trash2 className='size-7 md:size-8 text-red-500' />
-                            </button>
+const  LessonListPage = async({searchParams}:{searchParams:Promise<{page?:string,classId?:string}|undefined>}) => {
+    // Await the searchParams Promise
+    const resolvedParams = await searchParams;
+    const {page, ...queryParams} = resolvedParams || {};
 
-                            
-                        </>
-                    }
-                </div>
-             </td>
-        </tr>
+
+    const p = page ? (Number(page)) : 1 
+    // url params conditions
+    let query:Prisma.LessonWhereInput = {}
+    if(queryParams){
+        for(const [key,values] of Object.entries(queryParams)){
+              if(values !== undefined){
+                  switch(key){
+                    case 'teacherId':
+                       query.teacherId = values
+                    break;
+                    case 'classId':
+                       query.classId = Number(values)
+                    break;
+                    case 'search': 
+                       query.OR = [
+                        {
+                            subject:{
+                            name:{contains:values,mode:'insensitive'} 
+                        }},
+                       { 
+                        teacher:{
+                            firstName:{contains:values,mode:'insensitive'} ,
+                        }},
+                    ]
+                    break;
+                }
+              }
+        }
     }
+
+    const [data,count] = await prisma.$transaction([
+         prisma.lesson.findMany({
+        where:query,
+        include:{
+            teacher:{
+                select:{firstName:true,lastName:true}
+            },
+            class:{
+                select:{name:true}
+            },
+            subject:{
+                select:{
+                    name:true
+                }
+            },
+        },
+        take: ITEM_PER_PAGE,
+        skip: ITEM_PER_PAGE * (p- 1)
+    }),
+     prisma.lesson.count({where:query})
+])
+
 
   return (
     <div className='bg-white p-4 rounded-md flex-1 m-4 mt-0'>
@@ -100,11 +151,11 @@ const  LessonListPage = () => {
         </div>
         {/* list */}
         <div className="">
-            <Table  columns={columns} row={renderRow} data={lessonsData} />
+            <Table  columns={columns} row={renderRow} data={data} />
         </div>
         {/* pagination */}
         <div className="">
-            <Pagination/>
+            <Pagination page={p} count={count}/>
         </div>
     </div>
   )

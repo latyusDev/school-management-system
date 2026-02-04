@@ -2,7 +2,6 @@ import Pagination from '@/components/Pagination'
 import Table from '@/components/Table'
 import TableSearch from '@/components/TableSearch'
 import Image from 'next/image'
-import type { Column } from '@/components/Table'
 import Link from 'next/link'
 import {role, lessonsData, examsData } from '@/lib/data'
 import { FcViewDetails } from 'react-icons/fc'
@@ -12,16 +11,18 @@ import FormModal from '@/components/FormModal'
 import { IoCreate } from 'react-icons/io5'
 import { Eye, Trash2 } from 'lucide-react'
 import { PiPlusBold } from 'react-icons/pi'
+import { ITEM_PER_PAGE } from '@/lib/settings'
+import prisma from '@/lib/db'
+import { Class, Exam, Prisma, Subject, Teacher } from '@/generated/prisma/client'
 
-interface Exam{
-    id: number;
-    subject: string;
-    class: string;
-    teacher: string;
-    date: string;
-  }
+type ExamList = Exam&{lesson:{
+    subject:Subject,
+    class:Class,
+    teacher:Teacher,
 
-const columns:Column[] = [
+}}
+
+const columns = [
     {
         header:'Subject Name',
         accessor:'name'
@@ -49,40 +50,100 @@ const columns:Column[] = [
     }
 ]
 
+const renderRow = (item:ExamList)=>{
+   return  <tr key={item.id} className=' shadow-md  rounded-md '>
+        <td className='flex items-center gap-4 p-4'>
+         <div className='flex flex-col'>
+            <h1 className='font-semibold'>{item.lesson.subject.name}</h1>
+         </div>
+         </td>
+         <td className='hidden md:table-cell'>{item.lesson.class.name}</td>
+         <td className='hidden md:table-cell'>{item.lesson.teacher.firstName+' '+item.lesson.teacher.lastName}</td>
+         <td className='hidden md:table-cell'>{new Intl.DateTimeFormat('en-US').format(item.startTime)}</td>
+         <td>
+              <div className='flex items-center gap-2'>
+                {
+                    role === 'admin'|| role === 'teacher'&&
+                    <>
+                        <Link href={`/list/exams/${item.id}`} className='text-blue-500'>
+                            <Eye className='cursor-pointer size-7 md:size-8'/>
+                        </Link>
+                        <Link href={`/list/exams/${item.id}/edit`} className='text-green-500' >
+                            <IoCreate className='cursor-pointer size-7 md:size-8'/>
+                        </Link>
+                        <button>
+                            <Trash2 className='size-7 md:size-8 text-red-500' />
+                        </button>
 
-const  ExamListPage = () => {
-    const renderRow = (item:Exam)=>{
-       return  <tr key={item.id} className=' shadow-md  rounded-md '>
-            <td className='flex items-center gap-4 p-4'>
-             <div className='flex flex-col'>
-                <h1 className='font-semibold'>{item.subject}</h1>
-             </div>
-             </td>
-             <td className='hidden md:table-cell'>{item.class}</td>
-             <td className='hidden md:table-cell'>{item.teacher}</td>
-             <td className='hidden md:table-cell'>{item.date}</td>
-             <td>
-                  <div className='flex items-center gap-2'>
-                    {
-                        role === 'admin'&&
-                        <>
-                            <Link href={`/list/exams/${item.id}`} className='text-blue-500'>
-                                <Eye className='cursor-pointer size-7 md:size-8'/>
-                            </Link>
-                            <Link href={`/list/exams/${item.id}/edit`} className='text-green-500' >
-                                <IoCreate className='cursor-pointer size-7 md:size-8'/>
-                            </Link>
-                            <button>
-                                <Trash2 className='size-7 md:size-8 text-red-500' />
-                            </button>
+                        
+                    </>
+                }
+            </div>
+         </td>
+    </tr>
+}
 
-                            
-                        </>
-                    }
-                </div>
-             </td>
-        </tr>
+const  ExamListPage = async({searchParams}:{searchParams:Promise<{page?:string,classId?:string}|undefined>}) => {
+    // Await the searchParams Promise
+    const resolvedParams = await searchParams;
+    const {page, ...queryParams} = resolvedParams || {};
+
+
+    const p = page ? (Number(page)) : 1 
+    // url params conditions
+    let query:Prisma.ExamWhereInput = {}
+    if(queryParams){
+        for(const [key,values] of Object.entries(queryParams)){
+              if(values !== undefined){
+                  switch(key){
+                    case 'teacherId':
+                       query.lesson = {teacherId:values}
+                    break;
+                    case 'classId':
+                       query.lesson = {classId:Number(values)}
+                    break;
+                    case 'search': 
+                       query.lesson = {
+                        subject:{
+                            name:{contains:values,mode:'insensitive'}
+                        }
+                       }
+                    break;
+                }
+              }
+        }
     }
+
+    const [data,count] = await prisma.$transaction([
+         prisma.exam.findMany({
+        where:query,
+        include:{
+            lesson:{
+                select:{
+                    subject:{
+                        select:{
+                            name:true
+                        }
+                    },
+                    teacher:{
+                        select:{
+                            lastName:true,
+                            firstName:true,
+                        }
+                    },
+                    class:{
+                        select:{
+                            name:true
+                        }
+                    },
+                }
+            }
+        },
+        take: ITEM_PER_PAGE,
+        skip: ITEM_PER_PAGE * (p- 1)
+    }),
+     prisma.exam.count({where:query})
+])
 
   return (
     <div className='bg-white p-4 rounded-md flex-1 m-4 mt-0'>
@@ -108,11 +169,11 @@ const  ExamListPage = () => {
         </div>
         {/* list */}
         <div className="">
-            <Table  columns={columns} row={renderRow} data={examsData} />
+            <Table  columns={columns} row={renderRow} data={data} />
         </div>
         {/* pagination */}
         <div className="">
-            <Pagination/>
+            <Pagination count={count} page={p}/>
         </div>
     </div>
   )
